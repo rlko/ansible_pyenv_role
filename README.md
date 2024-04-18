@@ -1,38 +1,51 @@
-Role Name
-=========
+# Ansible Role: pyenv
 
-A brief description of the role goes here.
+## Description
 
-Requirements
-------------
+This Ansible role installs and configures `pyenv` for managing Python versions on your systems.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+* Ansible >= 2.9
+* Python packages on target systems (might be required by `pyenv-installer.sh`)
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
 
-Dependencies
-------------
+* `pyenv_root`: (Optional) Path to the `pyenv` installation directory. Defaults to `/opt/pyenv`.
+* `pyenv_deb_packages`: (List) List of Debian/Ubuntu package names required for `pyenv` (e.g., `build-essential`).
+* `pyenv_rpm_packages`: (List) List of RPM package names required for `pyenv` (e.g., `gcc`).
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+## Dependencies
 
-Example Playbook
-----------------
+* None
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## Example Playbook
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+---
+- hosts: all
+  become: true  # Required for some installation steps
+  roles:
+    - role: pyenv
+      pyenv_root: ~/.pyenv  # Optional, customize if needed. Defaults to `/opt/pyenv`
+```
 
-License
--------
+## Installing the Role
 
-BSD
+1. Clone or copy this role directory into your Ansible roles directory.
+2. (Optional) Modify the role variables (`defaults/main.yml` and `vars/main.yml`) to customize settings like `pyenv_root`, package lists, etc. Since I only added packages for Debian family and Red Hat family.
+3. Include the role in your playbook as described in the documentation for your chosen Ansible playbook format.
 
-Author Information
-------------------
+## License
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+MIT License
+
+## Author
+
+rlko
+
+## Additional Notes
+
+* System dependencies for `pyenv` installation are on based the pyenv [wiki](https://github.com/pyenv/pyenv/wiki).
+* Consider error handling and logging mechanisms in your playbook for a more robust deployment.
+
