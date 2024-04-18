@@ -1,0 +1,35 @@
+---
+# defaults file for pyenv_role
+
+pyenv_deb_packages:
+  - build-essential
+  - libssl-dev
+  - zlib1g-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - curl
+  - libncursesw5-dev
+  - xz-utils
+  - tk-dev
+  - libxml2-dev
+  - libxmlsec1-dev
+  - libffi-dev
+  - liblzma-dev
+
+pyenv_rpm_packages:
+  - gcc
+  - make
+  - patch
+  - zlib-devel
+  - bzip2
+  - bzip2-devel
+  - readline-devel
+  - sqlite
+  - sqlite-devel
+  - openssl-devel
+  - tk-devel
+  - libffi-devel
+  - xz-devel
+
+pyenv_root: /opt/pyenv

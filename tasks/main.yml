@@ -1,0 +1,37 @@
+---
+# tasks file for pyenv_role
+
+- name: Gather OS Facts
+  setup:
+
+- name: Install pyenv dependencies (Debian/Ubuntu)
+  apt:
+    name: "{{ pyenv_deb_packages }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: Install pyenv dependencies (RedHat/CentOS/Fedora)
+  yum:
+    name: "{{ pyenv_rpm_packages }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+- name: Download pyenv installer script
+  get_url:
+    url: https://pyenv.run
+    dest: /tmp/pyenv-installer.sh
+    mode: 0755
+
+- name: Launch pyenv installer script
+  shell: "PYENV_ROOT={{ pyenv_root }} /tmp/pyenv-installer.sh"
+  args:
+    creates: "{{ pyenv_root }}"
+
+- name: Append pyenv configuration to .bashrc
+  blockinfile:
+    path: ~/.bashrc
+    block: "{{ lookup('template', 'templates/bashrc_pyenv.j2') }}"
+    create: yes
+    mode: 0640
